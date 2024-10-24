@@ -15,7 +15,7 @@ startButton.addEventListener('click', () => {
         const remainingTime = endTime - Date.now();
         if (remainingTime <= 0) {
             clearInterval(timer);
-            countdownDisplay.textContent = "断食終了！";
+            countdownDisplay.textContent = endTime + "断食終了！";
             sendNotification();
         } else {
             countdownDisplay.textContent = `残り時間: ${Math.ceil(remainingTime / 1000)} 秒`;
