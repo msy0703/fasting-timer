@@ -1,6 +1,7 @@
 let timer;
 let countdownDisplay = document.getElementById('countdown');
 let startButton = document.getElementById('start-timer');
+let timerInput = document.getElementById('timer-input'); // 入力フィールドを取得
 
 // 通知の権限をリクエスト
 if ('Notification' in window) {
@@ -9,16 +10,22 @@ if ('Notification' in window) {
 
 // タイマー開始のイベント
 startButton.addEventListener('click', () => {
-    const endTime = Date.now() + 3000; // ミリ秒で設定
+    let inputMinutes = parseInt(timerInput.value); // ユーザーが入力した時間（分）を取得
+    if (isNaN(inputMinutes) || inputMinutes <= 0) {
+        countdownDisplay.textContent = "正しい時間を入力してください";
+        return;
+    }
+
+    const endTime = Date.now() + inputMinutes * 60 * 1000; // 分をミリ秒に変換して終了時間を設定
 
     timer = setInterval(() => {
         const remainingTime = endTime - Date.now();
         if (remainingTime <= 0) {
             clearInterval(timer);
-            countdownDisplay.textContent = endTime + "断食終了！";
-            sendNotification();
+            countdownDisplay.textContent = "断食終了！";
+            sendNotification(); // 通知を送信
         } else {
-            countdownDisplay.textContent = `残り時間: ${Math.ceil(remainingTime / 1000)} 秒`;
+            countdownDisplay.textContent = `残り時間: ${Math.ceil(remainingTime / 1000 / 60)} 分`;
         }
     }, 1000);
 });
@@ -31,16 +38,4 @@ function sendNotification() {
             icon: 'path-to-icon/icon.png'
         });
     }
-}
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-            .then(registration => {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(error => {
-                console.log('Service Worker registration failed:', error);
-            });
-    });
 }
