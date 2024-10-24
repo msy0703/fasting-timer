@@ -9,7 +9,7 @@ if ('Notification' in window) {
 
 // タイマー開始のイベント
 startButton.addEventListener('click', () => {
-    const endTime = Date.now() + 57600000; // 1分後
+    const endTime = Date.now() + 3000; // ミリ秒で設定
 
     timer = setInterval(() => {
         const remainingTime = endTime - Date.now();
