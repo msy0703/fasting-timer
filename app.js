@@ -44,7 +44,10 @@ startButton.addEventListener('click', () => {
             progressBar.value = 100; // タイマーが終了したらプログレスバーを100%に
             sendNotification(); // 通知を送信
         } else {
-            countdownDisplay.textContent = `残り時間: ${Math.ceil(remainingTime / 1000 / 60)} 分`;
+            // 残り時間をカウントダウン形式で表示
+            const remainingMinutes = Math.floor(remainingTime / 1000 / 60);
+            const remainingSeconds = Math.floor((remainingTime / 1000) % 60);
+            countdownDisplay.textContent = `残り時間: ${remainingMinutes}分 ${remainingSeconds}秒`;
 
             // プログレスバーの更新
             const elapsedTime = totalDuration - remainingTime;
