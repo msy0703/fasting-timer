@@ -7,22 +7,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>断食タイマー</h1>
+    <!-- 断食タイマーラベル -->
+    <div class="fasting-header">
+        <h2><span id="fasting-hours">16</span> 時間断食</h2>
+    </div>
 
-    <!-- 時間入力フィールド -->
-    <label for="timer-input">カウントダウン時間（分）：</label>
-    <input type="number" id="timer-input" min="1" value="60">
-    <button id="start-timer">タイマー開始</button>
+    <!-- 経過時間表示 -->
+    <div class="timer-display">
+        <p id="elapsed-time">00:00:00</p>
+        <p>経過時間</p>
+    </div>
 
-    <!-- タイマー開始・終了時間の表示領域 -->
-    <p id="start-time"></p>
-    <p id="end-time"></p>
+    <!-- 円形プログレスバー -->
+    <div class="circular-timer">
+        <div class="circle">
+            <svg>
+                <circle cx="75" cy="75" r="70"></circle>
+            </svg>
+            <div class="inner-content">
+                <p>食べない時間</p>
+            </div>
+        </div>
+    </div>
 
-    <!-- プログレスバー -->
-    <progress id="timer-progress" value="0" max="100"></progress>
+    <!-- 断食をスタートボタン -->
+    <div class="start-button">
+        <button id="start-fasting">断食をスタート</button>
+    </div>
 
-    <!-- カウントダウンの残り時間をプログレスバーの下に表示 -->
-    <p id="countdown">タイマーを開始してください</p>
+    <!-- ナビゲーションバー -->
+    <div class="navbar">
+        <ul>
+            <li>断食タイマー</li>
+            <li>断食カレンダー</li>
+            <li>体重推移分析</li>
+            <li>設定</li>
+        </ul>
+    </div>
 
     <script src="app.js"></script>
 </body>
