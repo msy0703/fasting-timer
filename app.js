@@ -6,6 +6,7 @@ let timerInput = document.getElementById('timer-input'); // ユーザー入力�
 // 新たに追加する要素
 let startTimeDisplay = document.getElementById('start-time');
 let endTimeDisplay = document.getElementById('end-time');
+let progressBar = document.getElementById('timer-progress'); // プログレスバー
 
 // 通知の権限をリクエスト
 if ('Notification' in window) {
@@ -20,9 +21,13 @@ startButton.addEventListener('click', () => {
         return;
     }
 
-    // 現在の時刻を取得（タイマーの開始時間）
+    // プログレスバーの初期化
+    progressBar.value = 0;
+
+    // タイマーの開始時間と終了時間
     const startTime = new Date();
     const endTime = new Date(startTime.getTime() + inputMinutes * 60 * 1000); // 終了時間を計算
+    const totalDuration = endTime - startTime; // タイマーの総時間
 
     // 開始時間と終了予定時間を画面に表示
     startTimeDisplay.textContent = `タイマー開始時間: ${formatTime(startTime)}`;
@@ -30,13 +35,21 @@ startButton.addEventListener('click', () => {
 
     // タイマーの終了時刻までカウントダウン
     timer = setInterval(() => {
-        const remainingTime = endTime - Date.now();
+        const currentTime = Date.now();
+        const remainingTime = endTime - currentTime;
+        
         if (remainingTime <= 0) {
             clearInterval(timer);
             countdownDisplay.textContent = "断食終了！";
+            progressBar.value = 100; // タイマーが終了したらプログレスバーを100%に
             sendNotification(); // 通知を送信
         } else {
             countdownDisplay.textContent = `残り時間: ${Math.ceil(remainingTime / 1000 / 60)} 分`;
+
+            // プログレスバーの更新
+            const elapsedTime = totalDuration - remainingTime;
+            const progressPercentage = (elapsedTime / totalDuration) * 100;
+            progressBar.value = progressPercentage; // プログレスバーの値を更新
         }
     }, 1000);
 });
