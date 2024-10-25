@@ -14,13 +14,15 @@
     <input type="number" id="timer-input" min="1" value="60">
     <button id="start-timer">タイマー開始</button>
 
-    <!-- カウントダウンと時間表示の領域 -->
-    <p id="countdown">タイマーを開始してください</p>
+    <!-- タイマー開始・終了時間の表示領域 -->
     <p id="start-time"></p>
     <p id="end-time"></p>
 
-    <!-- プログレスバーを追加 -->
+    <!-- プログレスバー -->
     <progress id="timer-progress" value="0" max="100"></progress>
+
+    <!-- カウントダウンの残り時間をプログレスバーの下に表示 -->
+    <p id="countdown">タイマーを開始してください</p>
 
     <script src="app.js"></script>
 </body>
