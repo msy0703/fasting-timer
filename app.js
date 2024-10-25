@@ -1,7 +1,9 @@
 let isFasting = false;
+let isPaused = false;
+let timer;
 let startTime;
 let elapsedTimeDisplay = document.getElementById('elapsed-time');
-let fastingHoursDisplay = document.getElementById('fasting-hours');
+let fastingButton = document.getElementById('start-fasting');
 let circle = document.querySelector('circle');
 let circleRadius = circle.r.baseVal.value;
 let circleCircumference = 2 * Math.PI * circleRadius;
@@ -9,18 +11,30 @@ let circleCircumference = 2 * Math.PI * circleRadius;
 circle.style.strokeDasharray = `${circleCircumference}`;
 circle.style.strokeDashoffset = `${circleCircumference}`;
 
-document.getElementById('start-fasting').addEventListener('click', function () {
+fastingButton.addEventListener('click', function () {
     if (!isFasting) {
+        // 断食開始
         isFasting = true;
-        startTime = new Date();
-        startFastingTimer();
+        startFasting();
+        fastingButton.textContent = "断食を停止"; // ボタンのテキストを「停止」に変更
+        fastingButton.classList.add('stop'); // ボタンの色を変更
+    } else {
+        // 断食停止
+        isFasting = false;
+        stopFasting();
+        fastingButton.textContent = "断食をスタート"; // ボタンのテキストを「スタート」に戻す
+        fastingButton.classList.remove('stop'); // ボタンの色を戻す
     }
 });
 
-function startFastingTimer() {
-    const totalFastingSeconds = parseInt(fastingHoursDisplay.textContent) * 3600;
+function startFasting() {
+    if (!isPaused) {
+        startTime = new Date(); // 初めてスタートする際に開始時間を設定
+    }
+    
+    const totalFastingSeconds = 16 * 3600; // 16時間を秒に変換
 
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
         let currentTime = new Date();
         let elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
 
@@ -32,6 +46,11 @@ function startFastingTimer() {
         updateElapsedTime(elapsedSeconds);
         updateProgressCircle(elapsedSeconds, totalFastingSeconds);
     }, 1000);
+}
+
+function stopFasting() {
+    clearInterval(timer); // タイマーを停止
+    isPaused = true; // 途中で停止したことを記録
 }
 
 function updateElapsedTime(seconds) {
