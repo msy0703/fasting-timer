@@ -63,22 +63,6 @@ body {
     margin-top: 20px;
 }
 
-.navbar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #f0e9da;
-    border-top: 1px solid #ccc;
-}
-
-.navbar ul {
-    display: flex;
-    justify-content: space-around;
-    list-style-type: none;
-    padding: 10px;
-    margin: 0;
-}
-
-.navbar li {
-    font-size: 14px;
+.start-button button.stop {
+    background-color: #f2a6a6;
 }
