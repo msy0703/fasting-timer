@@ -9,12 +9,15 @@
 <body>
     <h1>断食タイマー</h1>
 
-    <!-- 時間入力フィールドを追加 -->
+    <!-- 時間入力フィールド -->
     <label for="timer-input">カウントダウン時間（分）：</label>
     <input type="number" id="timer-input" min="1" value="60">
     <button id="start-timer">タイマー開始</button>
 
+    <!-- カウントダウンと時間表示の領域 -->
     <p id="countdown">タイマーを開始してください</p>
+    <p id="start-time"></p>
+    <p id="end-time"></p>
 
     <script src="app.js"></script>
 </body>
