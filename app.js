@@ -4,6 +4,7 @@ let timer;
 let startTime;
 let elapsedTimeDisplay = document.getElementById('elapsed-time');
 let fastingButton = document.getElementById('start-fasting');
+let resetButton = document.getElementById('reset-timer'); // リセットボタン
 let circle = document.querySelector('circle');
 let circleRadius = circle.r.baseVal.value;
 let circleCircumference = 2 * Math.PI * circleRadius;
@@ -27,11 +28,15 @@ fastingButton.addEventListener('click', function () {
     }
 });
 
+resetButton.addEventListener('click', function () {
+    resetTimer(); // リセットボタンが押された際にタイマーをリセット
+});
+
 function startFasting() {
     if (!isPaused) {
         startTime = new Date(); // 初めてスタートする際に開始時間を設定
     }
-    
+
     const totalFastingSeconds = 16 * 3600; // 16時間を秒に変換
 
     timer = setInterval(() => {
@@ -51,6 +56,18 @@ function startFasting() {
 function stopFasting() {
     clearInterval(timer); // タイマーを停止
     isPaused = true; // 途中で停止したことを記録
+}
+
+function resetTimer() {
+    clearInterval(timer); // タイマーをクリアして停止
+    isFasting = false;
+    isPaused = false;
+    fastingButton.textContent = "断食をスタート"; // ボタンのテキストを「スタート」に戻す
+    fastingButton.classList.remove('stop'); // ボタンの色を戻す
+
+    // 経過時間とプログレスバーをリセット
+    elapsedTimeDisplay.textContent = "00:00:00";
+    circle.style.strokeDashoffset = `${circleCircumference}`;
 }
 
 function updateElapsedTime(seconds) {
