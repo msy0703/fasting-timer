@@ -67,7 +67,9 @@ function resetTimer() {
 
     // 経過時間とプログレスバーをリセット
     elapsedTimeDisplay.textContent = "00:00:00";
-    circle.style.strokeDashoffset = `${circleCircumference}`;
+    circle.style.strokeDasharray = `${circleCircumference}`;
+    circle.style.strokeDashoffset = `${circleCircumference}`; // 最初に円を隠す
+
 }
 
 function updateElapsedTime(seconds) {
